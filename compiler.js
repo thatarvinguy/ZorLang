@@ -39,7 +39,6 @@ function evalConditions(conditions){ //TODO: Make expressive
             condition += ops[cond.type];
         }
         else {
-            console.log(cond)
             return "null";
         }
     }
