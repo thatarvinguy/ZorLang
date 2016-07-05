@@ -46,13 +46,45 @@ function iTp(infix) {
         "-": {
             precedence: 2,
             associativity: "Left"
+        },
+        ">": {
+            precedence: 1,
+            associativity: "Left"
+        },
+        "<": {
+            precedence: 1,
+            associativity: "Left"
+        },
+        "<=": {
+            precedence: 1,
+            associativity: "Left"
+        },
+        ">=": {
+            precedence: 1,
+            associativity: "Left"
+        },
+        "==": {
+            precedence: 1,
+            associativity: "Left"
+        },
+        "!=": {
+            precedence: 1,
+            associativity: "Left"
+        },
+        "&&": {
+            precedence: 0,
+            associativity: "Left"
+        },
+        "||": {
+            precedence: 0,
+            associativity: "Left"
         }
     }
     infix = infix.replace(/\s+/g, "");
     if (infix.substring(0, 1) == "-" || infix.substring(0, 1) == "+" ) {
         infix = "0" + infix;
     }
-    infix = infix.split(/([\%\+\-\*\/\^\(\)])/).clean();
+    infix = infix.split(/([\<\>\&\|\!\=\%\+\-\*\/\^\(\)])/).clean();
     for (var i = 0; i < infix.length; i++) {
         var token = infix[i];
         if (token.substring(0, 1) == "@"){
@@ -101,14 +133,70 @@ function iTp(infix) {
         else if (token.isNumeric() || token.isVar()) {
             outputQueue += token + " ";
         }
-        else if ("^*/+-%".indexOf(token) !== -1) {
-            var o1 = token;
-            var o2 = operatorStack[operatorStack.length - 1];
-            while ("^*/+-".indexOf(o2) !== -1 && ((operators[o1].associativity === "Left" && operators[o1].precedence <= operators[o2].precedence) || (operators[o1].associativity === "Right" && operators[o1].precedence < operators[o2].precedence))) {
-                outputQueue += operatorStack.pop() + " ";
-                o2 = operatorStack[operatorStack.length - 1];
+        else if ("^*/+-%<>=!|&".indexOf(token) !== -1) {//Fix repetition, THIS IS MESSY
+            var nextToken = infix[i+1];
+            if (token == "<" || token == ">"){
+                if (nextToken == "="){
+                    var o1 = token + "=";
+                    var o2 = operatorStack[operatorStack.length - 1];
+                    while ("^*/+-".indexOf(o2) !== -1 && ((operators[o1].associativity === "Left" && operators[o1].precedence <= operators[o2].precedence) || (operators[o1].associativity === "Right" && operators[o1].precedence < operators[o2].precedence))) {
+                        outputQueue += operatorStack.pop() + " ";
+                        o2 = operatorStack[operatorStack.length - 1];
+                    }
+                    operatorStack.push(o1);
+                    i++;
+                }
+                else {
+                    var o1 = token;
+                    var o2 = operatorStack[operatorStack.length - 1];
+                    while ("^*/+-".indexOf(o2) !== -1 && ((operators[o1].associativity === "Left" && operators[o1].precedence <= operators[o2].precedence) || (operators[o1].associativity === "Right" && operators[o1].precedence < operators[o2].precedence))) {
+                        outputQueue += operatorStack.pop() + " ";
+                        o2 = operatorStack[operatorStack.length - 1];
+                    }
+                    operatorStack.push(o1);
+                }
             }
-            operatorStack.push(o1);
+            else if (token == "!" || token == "="){
+                if (nextToken == "="){
+                    var o1 = token + "=";
+                    var o2 = operatorStack[operatorStack.length - 1];
+                    while ("^*/+-".indexOf(o2) !== -1 && ((operators[o1].associativity === "Left" && operators[o1].precedence <= operators[o2].precedence) || (operators[o1].associativity === "Right" && operators[o1].precedence < operators[o2].precedence))) {
+                        outputQueue += operatorStack.pop() + " ";
+                        o2 = operatorStack[operatorStack.length - 1];
+                    }
+                    operatorStack.push(o1);
+                    i++;
+                }
+                else {
+                    console.log("syntax error 10");
+                }
+            }
+            else if (token == "|" || token == "&"){
+                if (nextToken == token){
+                    var o1 = token + token;
+                    var o2 = operatorStack[operatorStack.length - 1];
+                    while ("^*/+-".indexOf(o2) !== -1 && ((operators[o1].associativity === "Left" && operators[o1].precedence <= operators[o2].precedence) || (operators[o1].associativity === "Right" && operators[o1].precedence < operators[o2].precedence))) {
+                        outputQueue += operatorStack.pop() + " ";
+                        o2 = operatorStack[operatorStack.length - 1];
+                    }
+                    operatorStack.push(o1);
+                    i++;
+                }
+                else {
+                    console.log("syntax error 11");
+                }
+            }
+            else {
+                var o1 = token;
+                var o2 = operatorStack[operatorStack.length - 1];
+                while ("^*/+-".indexOf(o2) !== -1 && ((operators[o1].associativity === "Left" && operators[o1].precedence <= operators[o2].precedence) || (operators[o1].associativity === "Right" && operators[o1].precedence < operators[o2].precedence))) {
+                    outputQueue += operatorStack.pop() + " ";
+                    o2 = operatorStack[operatorStack.length - 1];
+                }
+                operatorStack.push(o1);
+            }
+
+
         } else if (token === "(") {
             operatorStack.push(token);
         } else if (token === ")") {
@@ -146,7 +234,7 @@ function AST(inp) {
                 type: "Variable",
                 name: elem
             });
-        } else if ("^*/+-".indexOf(elem) !== -1) {
+        } else if (["^","*","/","+","-","%","<",">","<=",">=","==","||","&&"].indexOf(elem) !== -1) {
             let a = stack.pop();
             let b = stack.pop();
             stack.push({
@@ -166,6 +254,9 @@ function ASTtoJS(ast){
         return "(" + ast.value + ")";
     }
     else if (ast.type == "Variable"){
+        if (ast.name == "true" || ast.name == "false"){//keywords of sorts
+            return "("+ast.name+")";
+        }
         return "(_" + ast.name + ")";
     }
     else if (ast.type == "Function"){

@@ -175,7 +175,8 @@ function blocksValid(){
                 arrowDepth++;
             }
             else if (lexedTokens[i-1].type != "Literal" &&
-            lexedTokens[i-1].type != "Identifier"){
+            lexedTokens[i-1].type != "Identifier" &&
+            lexedTokens[i-1].type != "RightParen"){
                 return false;
             }
         }
@@ -189,7 +190,7 @@ function blocksValid(){
             parenDepth--;
         }
         else if (type == "RightArrow"){
-            if (!lexedTokens[i-1] ||
+            if (!lexedTokens[i-1].type ||
             lexedTokens[i-1].type == "Semicolon" ||
             lexedTokens[i-1].type == "RightBracket" ||
             lexedTokens[i-1].type == "RightBrace"){
@@ -199,7 +200,9 @@ function blocksValid(){
                 arrowDepth--;
             }
             else if (lexedTokens[i-1].type != "Literal" &&
-            lexedTokens[i-1].type != "Identifier"){
+            lexedTokens[i-1].type != "Identifier" &&
+            lexedTokens[i-1].type != "RightParen"){
+                console.log("here1")
                 return false;
             }
         }
@@ -218,7 +221,12 @@ var allowInExpression = {
     "Call":"@",
     "LeftParen":"(",
     "RightParen":")",
-    "Comma":",",
+    "LeftArrow":"<",
+    "RightArrow":">",
+    "And":"&",
+    "Or":"|",
+    "Equals":"=",
+    "ExclamationPoint":"!"
 }
 
 function getExpression(index){

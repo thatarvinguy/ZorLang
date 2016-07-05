@@ -12,14 +12,17 @@ function evalAssignment(instruction){ //Be careful with function variables that 
     return tag + instruction.identifier + " = " + instruction.value + ";";
 }
 
-const ops = {
-    "Equals": "=",
-    "ExclamationPoint": "!",
-    "LeftArrow": "<",
-    "RightArrow": ">",
-    "And": "&",
-    "Or": "|"
-};
+var ops = {
+    "Call":"@",
+    "LeftParen":"(",
+    "RightParen":")",
+    "LeftArrow":"<",
+    "RightArrow":">",
+    "And":"&",
+    "Or":"|",
+    "Equals":"=",
+    "ExclamationPoint":"!"
+}
 
 function evalConditions(conditions){ //TODO: Make expressive
     var condition = "";
@@ -29,7 +32,7 @@ function evalConditions(conditions){ //TODO: Make expressive
             condition += cond.value;
         }
         else if (cond.type == "Identifier"){
-            condition += "_"+cond.name;
+            condition += cond.name;
         }
         else if (ops[cond.type]){
             condition += ops[cond.type];
@@ -38,7 +41,7 @@ function evalConditions(conditions){ //TODO: Make expressive
             return "null";
         }
     }
-    return condition;
+    return require("./evalExpression")(condition);
 }
 
 function evalBlock(block){
