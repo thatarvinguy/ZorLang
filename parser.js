@@ -226,6 +226,7 @@ var allowInExpression = {
     "And":"&",
     "Or":"|",
     "Equals":"=",
+    "Comma":",",
     "ExclamationPoint":"!"
 }
 

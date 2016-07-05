@@ -1,1 +1,44 @@
-# 4==3;
+<loopAdd(start, add, numberOfTimes)
+    total = start;
+    index = 0;
+    [(index < numberOfTimes)
+        total = total + add;
+        index = index + 1;
+    ]
+    $ total;
+>
+
+newValue = ((@loopAdd(10, 5, 2) + @loopAdd(20, 10, 3)) * 2) ;
+
+{(newValue >= 1000)
+    # 4;
+}
+{?(newValue >= 100)
+    # 3;
+}
+{?(newValue >= 10)
+    # 2;
+}
+{?
+    # 1;
+}
+# newValue;
+
+<getNumberSquared(number)
+    $ number ^ 2;
+>
+
+<squareIsBetween(toSquare, num1, num2)
+    $ ((@getNumberSquared(toSquare) >= num1)&&(@getNumberSquared(toSquare) <= num2));
+>
+
+toSquare = 3;
+lowerLimit = 0;
+upperLimit = 20;
+
+{(@squareIsBetween(toSquare, lowerLimit, upperLimit))
+    # @getNumberSquared(toSquare);
+}
+{?
+    # upperLimit;
+}
