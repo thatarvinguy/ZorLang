@@ -1,12 +1,13 @@
 # Zor
 This is the compiler for the Zor programming language.
 
-## How to Use
-`npm install zor`
-Use any of the following commands to build/run Zor code:
-`zor run input.zor` to run input.zor.
-`zor build input.zor` to compile input.zor to input.js file.
-`zor build input.zor customfile.js` to compile input.zor to customfile.js file.
+## Installation
+* `npm install zor`
+
+## Commands and Usage
+* `zor run input.zor` to run input.zor.
+* `zor build input.zor` to compile input.zor to input.js file.
+* `zor build input.zor customfile.js` to compile input.zor to customfile.js file.
 
 ## Syntax
 * `variable = expression;` = `let variable = expression;` or `variable = expression;`
