@@ -9,7 +9,7 @@ var zorFile = process.argv[3];
 if (zorFile) { //Because bad error handling without this
     var code = fs.readFileSync(zorFile, "utf8").split("\n").join("");
     var lexedTokens = require("./lexer.js")(code);
-    var parsedTree = require("./parser.js")(0, lexedTokens.length);
+    var parsedTree = require("./parser.js")(lexedTokens).parseBlock(0, lexedTokens.length);
     var jsCode = '"use strict";' + require("./compiler.js")(parsedTree);
 
     switch (action) {

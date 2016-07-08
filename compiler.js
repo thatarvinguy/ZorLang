@@ -1,6 +1,3 @@
-// var code = require("fs").readFileSync("input.zor", "utf8").split("\n").join("");
-// var lexedTokens = require("./lexer.js")(code);
-// var parsedTree = require("./parser.js")(0, lexedTokens.length);
 var allVariables = [];
 function evalAssignment(instruction){ //Be careful with function variables that are defined //What about empty functions
     //Watch out redefining argument variables
@@ -25,7 +22,7 @@ var ops = {
     "ExclamationPoint":"!"
 }
 
-function evalConditions(conditions){ //TODO: Make expressive
+function evalConditions(conditions){
     var condition = "";
     for (var i = 0; i < conditions.length; i++){
         var cond = conditions[i];

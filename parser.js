@@ -1,5 +1,4 @@
-//var code = require("fs").readFileSync("input.zor", "utf8").split("\n").join("");
-//var lexedTokens = require("./lexer.js")(code);
+module.exports = functon(lexedTokens){
 
 var block = [];
 
@@ -54,7 +53,7 @@ function getConditions(index){
     }
 }
 
-module.exports = function parseBlock(start, finish){
+function parseBlock(start, finish){
     var block = [];
     if (blocksValid()){
         for (var i = start; i<finish;i++){
@@ -145,6 +144,9 @@ module.exports = function parseBlock(start, finish){
         console.log("Unmatching or invalid block definitions");
     }
     return block;
+}
+exports.parseBlock = function(start, finish){ //Get better way
+    return parseBlock(start, finish);
 }
 
 function blocksValid(){
@@ -291,3 +293,5 @@ function getFunctionInfo(index){
         console.log("syntax error 6");
     }
 }
+
+};
