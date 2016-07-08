@@ -48,7 +48,7 @@ function evalConditions(conditions){ //TODO: Make expressive
     return require("./evalExpression")(condition);
 }
 
-function evalBlock(block){
+module.exports = function evalBlock(block){
     var cpsCode = "";
     for (var i = 0; i < block.length; i++){
         var instruction = block[i];
@@ -82,5 +82,3 @@ function evalBlock(block){
     }
     return cpsCode;
 }
-
-require("fs").writeFileSync("output.js", '"use strict";' + evalBlock(parsedTree));

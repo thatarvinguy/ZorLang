@@ -2,7 +2,11 @@
 This is the compiler for the Zor programming language.
 
 ## How to Use
-Write Zor code in `input.zor`. Then run `node compiler.js` to compile the Zor source to JavaScript. Run `node output.js` to run the compiled JavaScript source.
+`npm install zor`
+Use any of the following commands to build/run Zor code:
+`zor run input.zor` to run input.zor.
+`zor build input.zor` to compile input.zor to input.js file.
+`zor build input.zor customfile.js` to compile input.zor to customfile.js file.
 
 ## Syntax
 * `variable = expression;` = `let variable = expression;` or `variable = expression;`
