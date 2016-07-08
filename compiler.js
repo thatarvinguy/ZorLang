@@ -35,6 +35,9 @@ function evalConditions(conditions){ //TODO: Make expressive
         else if (cond.type == "Identifier"){
             condition += cond.name;
         }
+        else if (cond.type == "StringLiteral"){
+            condition += cond.value;
+        }
         else if (ops[cond.type]){
             condition += ops[cond.type];
         }

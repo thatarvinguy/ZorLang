@@ -11,18 +11,17 @@
 newValue = ((@loopAdd(10, 5, 2) + @loopAdd(20, 10, 3)) * 2) ;
 
 {(newValue >= 1000)
-    # 4;
+    # newValue + " has 4 digits";
 }
 {?(newValue >= 100)
-    # 3;
+    # newValue + " has 3 digits";
 }
 {?(newValue >= 10)
-    # 2;
+    # newValue + " has 2 digits";
 }
 {?
-    # 1;
+    # newValue + " has 1 digit";
 }
-# newValue;
 
 <getNumberSquared(number)
     $ number ^ 2;
@@ -34,11 +33,20 @@ newValue = ((@loopAdd(10, 5, 2) + @loopAdd(20, 10, 3)) * 2) ;
 
 toSquare = 3;
 lowerLimit = 0;
-upperLimit = 20;
+upperLimit = 8;
 
 {(@squareIsBetween(toSquare, lowerLimit, upperLimit))
-    # @getNumberSquared(toSquare);
+    # @getNumberSquared(toSquare) + " is between " + lowerLimit + " and " + upperLimit;
 }
 {?
-    # upperLimit;
+    # @getNumberSquared(toSquare) + " is not between " + lowerLimit + " and " + upperLimit;
+}
+
+name = "Spongepants Squarebob";
+
+{(name == "Name McName")
+    # "That's a cool name!";
+}
+{?
+    # "Get a better name " + name;
 }

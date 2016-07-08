@@ -240,6 +240,9 @@ function getExpression(index){
         else if (type == "Literal"){
             expression += lexedTokens[i].value;
         }
+        else if (type == "StringLiteral"){
+            expression += lexedTokens[i].value;
+        }
         else if (type == "Identifier"){
             expression += lexedTokens[i].name;
         }
