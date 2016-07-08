@@ -1,4 +1,5 @@
 module.exports = function(lexedTokens){
+var exports = {};
 
 var block = [];
 
@@ -293,5 +294,7 @@ function getFunctionInfo(index){
         console.log("syntax error 6");
     }
 }
+
+return exports;
 
 };
