@@ -1,6 +1,6 @@
-var code = require("fs").readFileSync("input.zor", "utf8").split("\n").join("");
-var lexedTokens = require("./lexer.js")(code);
-var parsedTree = require("./parser.js")(0, lexedTokens.length);
+// var code = require("fs").readFileSync("input.zor", "utf8").split("\n").join("");
+// var lexedTokens = require("./lexer.js")(code);
+// var parsedTree = require("./parser.js")(0, lexedTokens.length);
 var allVariables = [];
 function evalAssignment(instruction){ //Be careful with function variables that are defined //What about empty functions
     //Watch out redefining argument variables

@@ -1,5 +1,5 @@
-var code = require("fs").readFileSync("input.zor", "utf8").split("\n").join("");
-var lexedTokens = require("./lexer.js")(code);
+//var code = require("fs").readFileSync("input.zor", "utf8").split("\n").join("");
+//var lexedTokens = require("./lexer.js")(code);
 
 var block = [];
 

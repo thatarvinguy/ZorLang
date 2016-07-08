@@ -1,5 +1,5 @@
 "use strict";
-var code = require("fs").readFileSync("input.zor", "utf8");
+//var code = require("fs").readFileSync("input.zor", "utf8");
 
 module.exports = function lex(code) {
     let result = [];
