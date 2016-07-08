@@ -1,4 +1,4 @@
-module.exports = functon(lexedTokens){
+module.exports = function(lexedTokens){
 
 var block = [];
 
