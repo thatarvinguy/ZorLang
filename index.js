@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require("fs");
-var run = require("child_process").exec;
+var spawn = require("child_process").spawn;
 
 var action = process.argv[2];
 var zorFile = process.argv[3];
@@ -34,22 +34,27 @@ if (zorFile) { //Because bad error handling without this
             //         });
             //     });
             // });
-            fs.mkdir('tmpzor', function(err, folder){
-                var path = 'tmpzor/' + zorFile.split(".")[0] + ".js";
-                fs.writeFile(path, jsCode, function(err) {
-                    run("node " + path, function(err, stdout, stderr){
-                        if (err){
-                            console.error(err);
-                        }
-                        process.stdout.write(stdout);
-                        if (stderr){
-                            console.log(stderr)
-                        }
-                        fs.unlinkSync(path);
-                        fs.rmdirSync('tmpzor');
-                    });
-                });
-            });
+            // fs.mkdir('tmpzor', function(err, folder){
+            //     var path = 'tmpzor/' + zorFile.split(".")[0] + ".js";
+            //     fs.writeFile(path, jsCode, function(err) {
+            //         run("node " + path, function(err, stdout, stderr){
+            //             if (err){
+            //                 console.error(err);
+            //             }
+            //             process.stdout.write(stdout);
+            //             if (stderr){
+            //                 console.log(stderr)
+            //             }
+            //             fs.unlinkSync(path);
+            //             fs.rmdirSync('tmpzor');
+            //         });
+            //     });
+            // });
+            var node = spawn("node");
+            node.stdin.write(jsCode);
+            node.stdin.end();
+            node.stdout.pipe(process.stdout);
+            node.stderr.pipe(process.stderr);
             break;
         default:
             console.log("Invalid action.");
